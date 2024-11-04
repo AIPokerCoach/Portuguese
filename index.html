@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Task Scheduler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Scheduler</h1>
+    <input type="text" id="taskInput" placeholder="Enter a task" />
+    <input type="number" id="priorityInput" placeholder="Priority (1-5)" min="1" max="5" />
+    <button onclick="addTask()">Add Task</button>
+
+    <h2>Scheduled Tasks</h2>
+    <ul id="taskList"></ul>
+
+    <script>
+        const tasks = [];
+
+        function addTask() {
+            const taskInput = document.getElementById('taskInput').value;
+            const priorityInput = parseInt(document.getElementById('priorityInput').value);
+
+            if (taskInput && priorityInput) {
+                tasks.push({ task: taskInput, priority: priorityInput });
+                tasks.sort((a, b) => a.priority - b.priority); // Sort by priority
+                document.getElementById('taskInput').value = '';
+                document.getElementById('priorityInput').value = '';
+                displayTasks();
+            } else {
+                alert('Please enter a valid task and priority.');
+            }
+        }
+
+        function displayTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = ''; // Clear current task list
+
+            tasks.forEach((taskObj, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Task: ${taskObj.task}, Priority: ${taskObj.priority}`;
+                taskList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
